@@ -1,0 +1,73 @@
+import openpyxl
+from opencage.geocoder import OpenCageGeocode
+from geopy.exc import GeocoderTimedOut, GeocoderUnavailable
+
+# Function to geocode latitude and longitude into an address
+def geocode_to_address(lat, lon):
+    try:
+        if lat is not None and lon is not None:
+            # Convert latitude and longitude to floating-point numbers
+            lat, lon = float(lat), float(lon)
+
+            # Create a geocoder instance with your OpenCage API key
+            geocoder = OpenCageGeocode("OUR_PURCHASED_API_KEY")
+
+            # Reverse geocode to get the address
+            result = geocoder.reverse_geocode(lat, lon)
+            if result and 'formatted' in result[0]:
+                return result[0]['formatted']
+            else:
+                return None
+        else:
+            return None
+
+    except (ValueError, GeocoderTimedOut, GeocoderUnavailable) as e:
+        print(f"Geocoding error: {e}")
+        return None
+
+# File paths with forward slashes
+input_file = "INPUT_FILE_LOCATION.xlsx"
+output_file = "OUTPUT_FILE_LOCATION.xlsx"
+
+# Function to count the number of rows in the input Excel file
+def count_rows(input_file):
+    wb = openpyxl.load_workbook(input_file)
+    ws = wb.active
+    return ws.max_row - 1
+
+def main():
+    # Load the workbook using openpyxl
+    wb = openpyxl.load_workbook(input_file)
+
+    # Select the first (default) worksheet
+    ws = wb.active
+
+    # Get the total number of rows to process
+    total_rows = count_rows(input_file)
+
+    # Initialize an empty list to store the geocoded addresses
+    addresses = []
+
+    # Skip the header row and iterate through each row, geocode the coordinates, and append the address to the list
+    for i, row in enumerate(ws.iter_rows(min_row=2, values_only=True), start=1):
+        if len(row) >= 2:
+            lat, lon = row[:2]
+            address = geocode_to_address(lat, lon)
+            addresses.append(address)
+
+            # Print progress update
+            print(f"Processed {i} of {total_rows} rows.", end='\r', flush=True)
+
+    # Add the addresses as a new column to the worksheet
+    ws.insert_cols(3)
+    for i, address in enumerate(addresses, start=2):
+        ws.cell(row=i, column=3, value=address)
+
+    # Save the modified workbook to the output file
+    wb.save(output_file)
+
+    # Print completion message
+    print("\nGeocoding completed!")
+
+if __name__ == "__main__":
+    main()
