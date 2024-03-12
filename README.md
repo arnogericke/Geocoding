@@ -1,7 +1,7 @@
 # Geocoding
 
 # Goal
-The goal of this project was to use ChatGPT to help develop a program, in Python, to facilitate Reverse Geocoding fr a Clinet Project.
+The goal of this project was to use ChatGPT to help develop a program, in Python, to facilitate Reverse Geocoding for a Client Project.
 I have no previous experience in Python, and leveraged GPT and Prompt Engineering to complete the development of my program.
 
 # Technology Used
@@ -9,8 +9,8 @@ I used ChatGPT to develop my Geocoding/Reverse-Geocoding application.
 At first I used GeoPY as my API to facilitate the request. The hard limits of 1300 calls per day, and 1 call per second, worked as a test bed to prove that I had a working version of the app, and to test ourput was correct.
 After some initial trial and error, finally correct output was achieved. The hard api call limit was the next issue that had to be resolved, as the database was quite large.
 I searched for another geolocation API service and came across OpenCage.
-OpeCage had block of API calls for sale, and per second calls were limited to 15 calls per second.
-I purchased the necessary API calls to complete the project, and modified my app code to use the OpenCage API key I received.
+OpeCage had blocks of API calls for sale, and per second calls were limited to 15 calls per second on the cheaper blocks.
+I purchased the necessary API call block, to complete the project, and modified my app code to use the OpenCage API key I received.
 Results were as expected, and this part of the project was completed sooner than expected.
 
 # Project Description
@@ -31,7 +31,7 @@ Initial scope: Client has numerous in field assets, but inaccurate location info
                Proper asset management for the client was top of the list of priorities.
 
 # Benefit:     
-               I was able to learn a lot regarding what is possible leveraging AI and Prompt Engineering, helping create a program which is tiny in scope, but performs very well.
+               I was able to learn a lot regarding what is possible leveraging AI and Prompt Engineering, helping me create a program which is tiny in scope, but performs very well.
                Having no experience in coding or using AI, I gained experience in solving a known problem, using unknown to me techonlogies.
                Using free services at first like Geopy as a test bed, then quickly realising the limitations of that service, I was able to keep development costs low.
                Continued development allowed me to move on to faster paid API's, which cut output time down 94%, from one return a second to 15 returns a second.
